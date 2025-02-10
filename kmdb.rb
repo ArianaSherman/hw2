@@ -86,13 +86,7 @@ Role.destroy_all
 # rails generate model Movie
 # rails generate model Role
 # rails generate model Actor
-# class CreateStudios < ActiveRecord::Migration[7.1]
-#     def change
-#       create_table :studios do |t|
-#         t.string "name"
-#         t.timestamps
-
-
+# see db/migrate for created fields
 # rails db:migrate
 
 # Insert data into the database that reflects the sample data shown above.
@@ -295,12 +289,12 @@ puts ""
 movie_list=Movie.all
 for film in movie_list
     title = film["title"]
-    year_released = film["year_released"]
+    year_released = film["year_released"].to_s #convert to string to avoid error with ljust 
     rating = film["rated"]
     studio_id = film["studio_id"]
     studio = Studio.find_by({ "id" => studio_id })
     studio_name= studio["name"]
-    puts "#{title} #{year_released} #{rating} #{studio_name}"
+    puts title.ljust(25) + year_released.ljust(15) +rating.ljust(15) + studio_name.ljust(25) #looked up ljust creates columns, needs to be with strings 
   end
 
 # Prints a header for the cast output
@@ -319,5 +313,5 @@ for role in roles_list
     actor_id = role["actor_id"]
     actor = Actor.find_by({ "id" => actor_id })
     actor_name= actor["name"]
-    puts "#{movie_title} #{actor_name} #{character}"
+    puts movie_title.ljust(25) + actor_name.ljust(25) + character.ljust(20)
   end
