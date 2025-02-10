@@ -286,14 +286,22 @@ new_role14["actor_id"]=anne["id"]
 new_role14["character_name"]="Selina Kyle"
 new_role14.save 
 
-
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
 puts ""
 
 # Query the movies data and loop through the results to display the movies output.
-# TODO!
+movie_list=Movie.all
+for film in movie_list
+    title = film["title"]
+    year_released = film["year_released"]
+    rating = film["rated"]
+    studio_id = film["studio_id"]
+    studio = Studio.find_by({ "id" => studio_id })
+    studio_name= studio["name"]
+    puts "#{title} #{year_released} #{rating} #{studio_name}"
+  end
 
 # Prints a header for the cast output
 puts ""
@@ -302,4 +310,14 @@ puts "========"
 puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
-# TODO!
+roles_list=Role.all
+for role in roles_list
+    character = role["character_name"]
+    movie_id = role["movie_id"]
+    movie = Movie.find_by({ "id" => movie_id })
+    movie_title= movie["title"]
+    actor_id = role["actor_id"]
+    actor = Actor.find_by({ "id" => actor_id })
+    actor_name= actor["name"]
+    puts "#{movie_title} #{actor_name} #{character}"
+  end
